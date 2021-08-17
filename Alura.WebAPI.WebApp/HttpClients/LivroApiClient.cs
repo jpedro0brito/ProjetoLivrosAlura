@@ -27,7 +27,7 @@ namespace Alura.ListaLeitura.HttpClients
         public async Task<Lista> GetListaLeituraAsync(TipoListaLeitura tipo)
         {
             AdicionarToken();
-            var resposta = await _httpClient.GetAsync($"listaLeitura/{tipo}");
+            var resposta = await _httpClient.GetAsync($"listasLeitura/{tipo}");
             resposta.EnsureSuccessStatusCode();
             return await resposta.Content.ReadAsAsync<Lista>();
         }
@@ -69,17 +69,17 @@ namespace Alura.ListaLeitura.HttpClients
             content.Add(new StringContent(model.Titulo), EnvolveComAspasDuplas("titulo"));
             content.Add(new StringContent(model.Lista.ParaString()), EnvolveComAspasDuplas("autor"));
 
-            if (string.IsNullOrEmpty(model.Subtitulo))
+            if (!string.IsNullOrEmpty(model.Subtitulo))
             {
                 content.Add(new StringContent(model.Subtitulo), EnvolveComAspasDuplas("subtitulo"));
             }
 
-            if (string.IsNullOrEmpty(model.Resumo))
+            if (!string.IsNullOrEmpty(model.Resumo))
             {
                 content.Add(new StringContent(model.Resumo), EnvolveComAspasDuplas("resumo"));
             }
 
-            if (string.IsNullOrEmpty(model.Autor))
+            if (!string.IsNullOrEmpty(model.Autor))
             {
                 content.Add(new StringContent(model.Autor), EnvolveComAspasDuplas("autor"));
             }
